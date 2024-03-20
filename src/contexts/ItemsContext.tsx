@@ -21,7 +21,7 @@ interface ItemsProviderProps {
 }
 
 export function ItemsProvider({ children }: ItemsProviderProps) {
-  const [listItems, setListItems] = useState([])
+  const [listItems, setListItems] = useState<ListItem[]>([])
   const [skipParam, setSkipParam] = useState(-10)
   const [hasFetchedAll, setHasFetchedAll] = useState(false)
   const loaderRef = useRef(null)
@@ -32,7 +32,7 @@ export function ItemsProvider({ children }: ItemsProviderProps) {
 
       fetch(url)
         .then((response) => response.json())
-        .then((data) => {
+        .then((data: { users: ListItem[]; total: number }) => {
           setListItems((state) => [...state, ...data.users])
 
           if (data.total === listItems.length + 10) {
